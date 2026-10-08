@@ -1,19 +1,47 @@
-Tower 
-#include <stdio.h>
-void towerOfHanoi(int n, char source, char auxiliary, char destination){
- if (n == 1){
- printf("Move disk 1 from %c to %c\n", source, destination);
- return;
- }
- towerOfHanoi(n - 1, source, destination, auxiliary);
- printf("Move disk %d from %c to %c\n", n, source, destination);
- towerOfHanoi(n - 1, auxiliary, source, destination);
-}
-int main(){
- int n;
- printf("Enter number of disks: ");
- scanf("%d", &n);
- printf("\nSteps to solve Tower of Hanoi:\n");
- towerOfHanoi(n, 'A', 'B', 'C');
- return 0;
+package com.example.bankapp;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText balance, withdraw;
+    Button btnWithdraw;
+    TextView result;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        balance = findViewById(R.id.balance);
+        withdraw = findViewById(R.id.withdraw);
+        btnWithdraw = findViewById(R.id.btnWithdraw);
+        result = findViewById(R.id.result);
+
+        btnWithdraw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                double b = Double.parseDouble(
+                        balance.getText().toString());
+
+                double w = Double.parseDouble(
+                        withdraw.getText().toString());
+
+                if (b >= w) {
+                    double remaining = b - w;
+
+                    result.setText("Remaining Balance: " + remaining);
+                } else {
+                    result.setText("Insufficient Balance");
+                }
+            }
+        });
+    }
 }
