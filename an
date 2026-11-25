@@ -1,0 +1,35 @@
+public class MainActivity extends AppCompatActivity {
+
+    EditText name, email, mobile;
+    Button submit;
+    TextView result;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        mobile = findViewById(R.id.mobile);
+        submit = findViewById(R.id.submit);
+        result = findViewById(R.id.result);
+
+        submit.setOnClickListener(v -> {
+
+            String n = name.getText().toString().trim();
+            String e = email.getText().toString().trim();
+            String m = mobile.getText().toString().trim();
+
+            if (!n.isEmpty() && !e.isEmpty() && !m.isEmpty()) {
+
+                result.setText("Name: " + n +
+                        "\nEmail: " + e +
+                        "\nMobile: " + m);
+
+            } else {
+                result.setText("Please fill all fields");
+            }
+        });
+    }
+}
