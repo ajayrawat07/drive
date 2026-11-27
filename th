@@ -1,0 +1,31 @@
+class a implements Runnable {
+    public void run() {
+        synchronized (Main.class) {
+            for (int i = 1; i <= 50; i++) {
+                if (i % 4 == 0)
+                    System.out.println(i);
+            }
+        }
+    }
+}
+
+class b implements Runnable {
+    public void run() {
+        synchronized (Main.class) {
+            for (int i = 1; i <= 50; i++) {
+                if (i % 7 == 0)
+                    System.out.println(i);
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new a());
+        Thread t2 = new Thread(new b());
+
+        t1.start();
+        t2.start();
+    }
+}
