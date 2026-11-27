@@ -1,0 +1,106 @@
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Main extends JFrame implements ActionListener {
+
+    JLabel l1, l2, l3, l4, l5, l6;
+    JTextField t1, t2, t3, t4, t5, t6;
+    JButton b;
+
+    Main() {
+        l1 = new JLabel("Student Name");
+        l2 = new JLabel("Roll Number");
+        l3 = new JLabel("Total Classes");
+        l4 = new JLabel("Classes Attended");
+        l5 = new JLabel("Attendance %");
+        l6 = new JLabel("Status");
+
+        t1 = new JTextField();
+        t2 = new JTextField();
+        t3 = new JTextField();
+        t4 = new JTextField();
+        t5 = new JTextField();
+        t6 = new JTextField();
+
+        b = new JButton("Calculate");
+
+        l1.setBounds(40, 50, 120, 30);
+        l2.setBounds(40, 100, 120, 30);
+        l3.setBounds(40, 150, 120, 30);
+        l4.setBounds(40, 200, 120, 30);
+        l5.setBounds(40, 250, 120, 30);
+        l6.setBounds(40, 300, 120, 30);
+
+        t1.setBounds(170, 50, 150, 30);
+        t2.setBounds(170, 100, 150, 30);
+        t3.setBounds(170, 150, 150, 30);
+        t4.setBounds(170, 200, 150, 30);
+        t5.setBounds(170, 250, 150, 30);
+        t6.setBounds(170, 300, 150, 30);
+
+        b.setBounds(130, 360, 120, 30);
+
+        setLayout(null);
+
+        add(l1);
+        add(l2);
+        add(l3);
+        add(l4);
+        add(l5);
+        add(l6);
+
+        add(t1);
+        add(t2);
+        add(t3);
+        add(t4);
+        add(t5);
+        add(t6);
+
+        add(b);
+
+        t5.setEditable(false);
+        t6.setEditable(false);
+
+        b.addActionListener(this);
+
+        setTitle("Attendance Calculator");
+        setSize(400, 480);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        try {
+            double total = Double.parseDouble(t3.getText());
+            double attended = Double.parseDouble(t4.getText());
+
+            if(attended > total || attended < 0 || total <= 0) {
+                throw new InvalidAttendanceException("Invalid Attendance");
+            }
+
+            double per = (attended / total) * 100;
+
+            t5.setText(String.valueOf(per));
+
+            if(per >= 75)
+                t6.setText("Eligible");
+            else
+                t6.setText("Not Eligible");
+        }
+
+        catch(InvalidAttendanceException ex) {
+            t5.setText("");
+            t6.setText(ex.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        new Main();
+    }
+}
+
+class InvalidAttendanceException extends Exception {
+    InvalidAttendanceException(String msg) {
+        super(msg);
+    }
+}
